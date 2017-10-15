@@ -21,7 +21,7 @@ struct LinkedList {
  * Structure for each element of a doubly-linked LinkedList.
  */
 typedef struct LinkedListNode {
-    void *data;
+    char *data;
     struct LinkedListNode *next;
     struct LinkedListNode *prev;
 } LinkedListNode;
@@ -37,7 +37,7 @@ LinkedList_new() {
 }
 
 static LinkedListNode *
-LinkedListNode_new(void *data) {
+LinkedListNode_new(char *data) {
     LinkedListNode *node = (LinkedListNode*)malloc(sizeof(LinkedListNode));
     if (node == NULL) {
 	abort();
@@ -80,7 +80,7 @@ LinkedList_is_empty(const LinkedList *list) {
  * Add the given void* value at the front of the given LinkedList.
  */
 void
-LinkedList_add_at_front(LinkedList *list, void *data) {
+LinkedList_add_at_front(LinkedList *list, char *data) {
     LinkedListNode *node = LinkedListNode_new(data);
     node->next = list->first;
     if (list->first != NULL) {
@@ -96,7 +96,7 @@ LinkedList_add_at_front(LinkedList *list, void *data) {
  * Add the given void* value at the end of the given LinkedList.
  */
 void
-LinkedList_add_at_end(LinkedList *list, void *data) {
+LinkedList_add_at_end(LinkedList *list, char *data) {
     LinkedListNode *node = LinkedListNode_new(data);
     node->prev = list->last;
     if (list->last != NULL) {
@@ -112,7 +112,7 @@ LinkedList_add_at_end(LinkedList *list, void *data) {
  * Return true if then given LinkedList contains given void* value.
  */
 bool
-LinkedList_contains(const LinkedList *list, void *data) {
+LinkedList_contains(const LinkedList *list, char *data) {
     for (LinkedListNode *node=list->first; node != NULL; node=node->next) {
 	if (node->data == data) {
 	    return true;
@@ -126,7 +126,7 @@ LinkedList_contains(const LinkedList *list, void *data) {
  * Note that this does not free the data associated with the element.
  */
 void
-LinkedList_remove(LinkedList *list, void *data) {
+LinkedList_remove(LinkedList *list, char *data) {
     for (LinkedListNode *node=list->first; node != NULL; node=node->next) {
 	if (node->data == data) {
 	    if (node == list->first) {
@@ -145,14 +145,14 @@ LinkedList_remove(LinkedList *list, void *data) {
 	    return;
 	}
     }
-}    
+}
 
 /**
  * Return the void* value at the given index in the given LinkedList, or
  * NULL if there is no such.
  * Note that this means you can't store NULL in a LinkedList. C'est la vie.
  */
-void *
+char *
 LinkedList_element_at(LinkedList *list, int index) {
     int i = 0;
     for (LinkedListNode *node=list->first; node != NULL; node=node->next) {
@@ -168,63 +168,15 @@ LinkedList_element_at(LinkedList *list, int index) {
  * Remove and return the first element from the given LinkedList.
  * Returns NULL if the list is empty.
  */
-void *
+char *
 LinkedList_pop(LinkedList *list) {
-    void *data = LinkedList_element_at(list, 0);
+    char *data = LinkedList_element_at(list, 0);
     if (data != NULL) {
 	LinkedList_remove(list, data); // Removes first occurrence
     }
     return data;
 }
 
-/**
- * Call the given function on each element of given LinkedList, passing the
- * void* value to the function.
- */
-void
-LinkedList_iterate(const LinkedList *list, void (*func)(void *)) {
-    for (LinkedListNode *node=list->first; node != NULL; node=node->next) {
-	func(node->data);
-    }
-}
-
-/**
- * Return an LinkedListIterator for the given LinkedList.
- * Don't forget to free() this when you're done iterating.
- */
-LinkedListIterator *
-LinkedList_iterator(const LinkedList *list) {
-    LinkedListIterator *iterator = (LinkedListIterator*)malloc(sizeof(LinkedListIterator));
-    *iterator = list->first;
-    return iterator;
-}
-
-/**
- * Return true if the given LinkedListIterator will return another element
- * if LinkedListIterator_next() is called.
- */
-bool
-LinkedListIterator_has_next(const LinkedListIterator *iterator) {
-    return iterator != NULL && *iterator != NULL;
-}
-
-/**
- * Return the next value from the given LinkedListIterator and increment it
- * to point to the next element.
- * Will return NULL if there is no such element.
- * This means that you can't store NULL in a LinkedList. C'est la vie.
- * It would be easy to allow it and signal `no such element' some other way...
- */
-void *
-LinkedListIterator_next(LinkedListIterator *iterator) {
-    if (iterator == NULL || *iterator == NULL) {
-	return NULL;
-    } else {
-	void *data = (*iterator)->data;
-	*iterator = (*iterator)->next;
-	return data;
-    }
-}
 
 /**
  * Print the given LinkedList to stdout, assuming that the values are
@@ -233,10 +185,10 @@ LinkedListIterator_next(LinkedListIterator *iterator) {
 void
 LinkedList_print_string_list(LinkedList *list) {
     for (LinkedListNode *node=list->first; node != NULL; node=node->next) {
-	printf("%s", (char*)node->data);
-	if (node->next != NULL) {
-	    printf(" ");
-	}
+	     printf("%s", node->data);
+	     if (node->next != NULL) {
+	        printf(" ");
+	     }
     }
     printf("\n");
 }
