@@ -80,7 +80,7 @@ TREE T(){
 
 }
 
-TREE TT(){
+TREE G(){
 
 }
 
@@ -88,14 +88,13 @@ TREE F(){
 
 }
 
-TREE FT(){
+TREE H(){
 
 }
 */
 TREE N(){
   TREE d, i;
   d = D();
-  nextTerminal++;
   if(d == FAILED){
     return FAILED;
   } else{
