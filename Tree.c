@@ -11,6 +11,7 @@ struct NODE {
 
 TREE parseTree;
 char *nextTerminal;
+int indentCounter = 0;
 
 TREE makeNode0(char x){
     TREE root;
@@ -57,8 +58,32 @@ TREE B(){
 
 }
 
+void pre_order(TREE t) {
+  if (t == NULL) {
+    indentCounter--;
+    return;
+  } else {
+    printf("\n");
+    for(int i = 0; i<= indentCounter; i++){
+      printf("  ");
+    }
+    if(t->label == 'B'){
+      printf("<");
+      printf("%c", t->label);
+      printf(">");
+    } else{
+      printf("%c", t->label);
+    }
+    indentCounter++;
+    pre_order(t->leftmostChild);
+    pre_order(t->rightSibling);
+  }
+}
+
 int main(){
     nextTerminal = "()()";
     parseTree = B();
+    pre_order(parseTree);
+    printf("\n");
     return 0;
 }
