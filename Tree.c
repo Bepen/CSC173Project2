@@ -27,6 +27,19 @@ TREE makeNode1(char x, TREE t){
     root->leftmostChild = t;
     return root;
 }
+TREE makeNode2(char x, TREE t1, TREE t2){
+    TREE root;
+    root = makeNode1(x, t1);
+    t1->rightSibling = t2;
+    return root;
+}
+TREE makeNode3(char x, TREE t1, TREE t2, TREE t3){
+    TREE root;
+    root = makeNode1(x, t1);
+    t1->rightSibling = t2;
+    t2->rightSibling = t3;
+    return root;
+}
 TREE makeNode4(char x, TREE t1, TREE t2, TREE t3, TREE t4){
     TREE root;
     root = makeNode1(x, t1);
@@ -58,6 +71,63 @@ TREE B(){
 
 }
 
+/*
+TREE E(){
+
+}
+
+TREE T(){
+
+}
+
+TREE TT(){
+
+}
+
+TREE F(){
+
+}
+
+TREE FT(){
+
+}
+*/
+TREE N(){
+  TREE d, i;
+  d = D();
+  nextTerminal++;
+  if(d == FAILED){
+    return FAILED;
+  } else{
+    return makeNode1('N', d);
+  }
+}
+
+TREE I(){
+  TREE n;
+  n = N();
+  if(n == FAILED){
+    return FAILED;
+  } else if(nextTerminal == NULL){
+    return makeNode1('I', makeNode0('e'));
+  } else {
+    return makeNode1('I', n);
+  }
+}
+
+TREE D(){
+  if((*nextTerminal == '0') || (*nextTerminal == '1')
+  || (*nextTerminal == '2') || (*nextTerminal == '3')
+  || (*nextTerminal == '4') || (*nextTerminal == '5')
+  || (*nextTerminal == '6') || (*nextTerminal == '7')
+  || (*nextTerminal == '8') || (*nextTerminal == '9')){
+    return makeNode1('D', makeNode0(*nextTerminal));
+  }
+  else{
+    return FAILED;
+  }
+}
+
 void pre_order(TREE t) {
   if (t == NULL) {
     indentCounter--;
@@ -67,7 +137,8 @@ void pre_order(TREE t) {
     for(int i = 0; i<= indentCounter; i++){
       printf("  ");
     }
-    if(t->label == 'B'){
+    if(t->label == 'B' || t->label == 'D' || t->label == 'N' ||
+       t->label == 'I'){
       printf("<");
       printf("%c", t->label);
       printf(">");
@@ -81,8 +152,13 @@ void pre_order(TREE t) {
 }
 
 int main(){
+    /*
     nextTerminal = "()()";
     parseTree = B();
+    pre_order(parseTree);
+    */
+    nextTerminal = "12";
+    parseTree = I();
     pre_order(parseTree);
     printf("\n");
     return 0;
