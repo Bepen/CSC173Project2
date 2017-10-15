@@ -73,29 +73,19 @@ TREE B(){
 
 /*
 TREE E(){
-
 }
-
 TREE T(){
-
 }
-
-TREE TT(){
-
+TREE G(){
 }
-
 TREE F(){
-
 }
-
-TREE FT(){
-
+TREE H(){
 }
 */
 TREE N(){
   TREE d, i;
   d = D();
-  nextTerminal++;
   if(d == FAILED){
     return FAILED;
   } else{
@@ -151,7 +141,7 @@ void pre_order(TREE t) {
   }
 }
 
-int main(int argc, char* argv[]){
+int main(){
     /*
     nextTerminal = "()()";
     parseTree = B();
