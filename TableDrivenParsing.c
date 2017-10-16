@@ -4,8 +4,8 @@
 #include "stdbool.h"
 #include <string.h>
 #include "TableDrivenParsing.h"
-#include "LinkedList.c"
-#include "LinkedList.h"
+#include "Stack.c"
+#include "Stack.h"
 
 typedef struct NODE *TREE;
 struct NODE {
@@ -14,7 +14,6 @@ struct NODE {
 };
 
 TREE parseTree;
-char *nextTerminal;
 int indentCounter = 0;
 int tested = 0;
 
@@ -77,216 +76,252 @@ void pre_order(TREE t) {
 }
 
 bool table_driven() {
-  char* input = "3+5";
+  char* input = "1+7*3/(3+5)";
   printf("Input: %s\n", input);
-
-  int productions[6][8] = {{1, 0, 0, 0, 0, 0, 1, 0},
-                  {2, 0, 0, 0, 0, 0, 2, 0},
-                  {0, 5, 3, 4, 0, 0, 0, 5},
-                  {6, 0, 0, 0, 0, 0, 6, 0},
-                  {0, 9, 9, 9, 7, 8, 0, 0},
-                  {10, 0, 0, 0, 0, 0, 11, 0},
-                };
-  LinkedList *list = LinkedList_new();
-  LinkedList_add_at_front(list, "S");
+  Stack *stack = Stack_new();
+  Stack_add_at_front(stack, "S");
 
   for (int i = 0; input[i] != '\0'; i++) {
       if (input[i] == '0' || input[i] == '1' || input[i] == '2' ||
         input[i] == '3'|| input[i] == '4'|| input[i] == '5'||
         input[i] == '6'|| input[i] == '7'|| input[i] == '8'||
         input[i] == '9') {
+          //printf("Looking at: %c using the integers\n", input[i]);
           tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "S") == 0) {
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "S") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "Z");
-              LinkedList_add_at_front(list, "E");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "Z");
+              Stack_add_at_front(stack, "E");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "E") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "E") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "J");
-              LinkedList_add_at_front(list, "T");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "J");
+              Stack_add_at_front(stack, "T");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "T") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "T") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "K");
-              LinkedList_add_at_front(list, "F");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "K");
+              Stack_add_at_front(stack, "F");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "F") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "F") == 0) {
               tested = 1;
-              LinkedList_pop(list);
+              Stack_pop(stack);
               if (input[i] == '0') {
-                LinkedList_add_at_front(list, "0");
+                Stack_add_at_front(stack, "0");
               } else if (input[i] == '1') {
-                LinkedList_add_at_front(list, "1");
+                Stack_add_at_front(stack, "1");
               } else if (input[i] == '2') {
-                LinkedList_add_at_front(list, "2");
+                Stack_add_at_front(stack, "2");
               } else if (input[i] == '3') {
-                LinkedList_add_at_front(list, "3");
+                Stack_add_at_front(stack, "3");
               } else if (input[i] == '4') {
-                LinkedList_add_at_front(list, "4");
+                Stack_add_at_front(stack, "4");
               } else if (input[i] == '5') {
-                LinkedList_add_at_front(list, "5");
+                Stack_add_at_front(stack, "5");
               } else if (input[i] == '6') {
-                LinkedList_add_at_front(list, "6");
+                Stack_add_at_front(stack, "6");
               } else if (input[i] == '7') {
-                LinkedList_add_at_front(list, "7");
+                Stack_add_at_front(stack, "7");
               } else if (input[i] == '8') {
-                LinkedList_add_at_front(list, "8");
+                Stack_add_at_front(stack, "8");
               } else if (input[i] == '9') {
-                LinkedList_add_at_front(list, "9");
+                Stack_add_at_front(stack, "9");
               }
             }
             if (tested == 0) {
               return false;
             }
           }
-          LinkedList_print_string_list(list);
-          char* p = LinkedList_pop(list);
-          printf("Popped Element: %s", p);
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
       if (input[i] == '(') {
+        //printf("Looking at: %c with open parentheses\n", input[i]);
         tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "S") == 0) {
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "S") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "Z");
-              LinkedList_add_at_front(list, "E");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "Z");
+              Stack_add_at_front(stack, "E");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "E") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "E") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "J");
-              LinkedList_add_at_front(list, "T");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "J");
+              Stack_add_at_front(stack, "T");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "T") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "T") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "K");
-              LinkedList_add_at_front(list, "F");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "K");
+              Stack_add_at_front(stack, "F");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "F") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "F") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, ")");
-              LinkedList_add_at_front(list, "E");
-              LinkedList_add_at_front(list, "(");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, ")");
+              Stack_add_at_front(stack, "E");
+              Stack_add_at_front(stack, "(");
             }
             if (tested == 0) {
               return false;
             }
           }
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
       if (input[i] == ')') {
         tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "J") == 0) {
+        //printf("Looking at: %c with closed parentheses\n", input[i]);
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
               tested = 1;
-              LinkedList_pop(list);
+              Stack_pop(stack);
             }
-            if (strcmp(LinkedList_element_at(list, 0), "K") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
               tested = 1;
-              LinkedList_pop(list);
+              Stack_pop(stack);
             }
             if (tested == 0) {
               return false;
             }
           }
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
       if (input[i] == '+') {
         tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "J") == 0) {
+        //printf("Looking at: %c with the plus symbol\n", input[i]);
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "J");
-              LinkedList_add_at_front(list, "T");
-              LinkedList_add_at_front(list, "+");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "J");
+              Stack_add_at_front(stack, "T");
+              Stack_add_at_front(stack, "+");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "K") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
               tested = 1;
-              LinkedList_pop(list);
+              Stack_pop(stack);
             }
             if (tested == 0) {
               return false;
             }
           }
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
       if (input[i] == '-') {
         tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "J") == 0) {
+        //printf("Looking at: %c with the subtraction symbol\n", input[i]);
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "J");
-              LinkedList_add_at_front(list, "T");
-              LinkedList_add_at_front(list, "-");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "J");
+              Stack_add_at_front(stack, "T");
+              Stack_add_at_front(stack, "-");
             }
-            if (strcmp(LinkedList_element_at(list, 0), "K") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
               tested = 1;
-              LinkedList_pop(list);
+              Stack_pop(stack);
             }
             if (tested == 0) {
               return false;
             }
           }
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
       if (input[i] == '*') {
         tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "K") == 0) {
+        //printf("Looking at: %c with the multiplication symbol\n", input[i]);
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "K");
-              LinkedList_add_at_front(list, "F");
-              LinkedList_add_at_front(list, "*");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "K");
+              Stack_add_at_front(stack, "F");
+              Stack_add_at_front(stack, "*");
             }
             if (tested == 0) {
               return false;
             }
           }
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
       if (input[i] == '/') {
         tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "K") == 0) {
+        //printf("Looking at: %c with the division symbol\n", input[i]);
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
               tested = 1;
-              LinkedList_pop(list);
-              LinkedList_add_at_front(list, "K");
-              LinkedList_add_at_front(list, "F");
-              LinkedList_add_at_front(list, "/");
+              Stack_pop(stack);
+              Stack_add_at_front(stack, "K");
+              Stack_add_at_front(stack, "F");
+              Stack_add_at_front(stack, "/");
             }
             if (tested == 0) {
               return false;
             }
           }
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
       if (input[i] == 'Z') {
         tested = 0;
-          while(LinkedList_element_at(list, 0)[0] != input[i]) {
-            if (strcmp(LinkedList_element_at(list, 0), "J") == 0) {
+        //printf("Looking at: %c with the end symbol\n", input[i]);
+          while(Stack_element_at(stack, 0)[0] != input[i]) {
+            if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
               tested = 1;
-              LinkedList_pop(list);
+              Stack_pop(stack);
             }
-            if (strcmp(LinkedList_element_at(list, 0), "K") == 0) {
+            if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
               tested = 1;
-              LinkedList_pop(list);
+              Stack_pop(stack);
             }
             if (tested == 0) {
               return false;
             }
           }
+          //Stack_print_string_stack(stack);
+          char* p = Stack_pop(stack);
+          //printf("Popped Element: %s", p);
       }
   }
-  return !LinkedList_is_empty(list);
+  //printf("\nStack: ");
+  //Stack_print_string_stack(stack);
+  //printf("Stack with epsilons\n");
+  while (!Stack_is_empty(stack)) {
+    if (strcmp(Stack_element_at(stack, 0), "Z") == 0
+    || strcmp(Stack_element_at(stack, 0), "J") == 0
+    || strcmp(Stack_element_at(stack, 0), "K") == 0) {
+      Stack_pop(stack);
+    } else {
+      //printf("Failure\n");
+      return false;
+    }
+  }
+  //printf("\nStack: ");
+  //Stack_print_string_stack(stack);
+  return Stack_is_empty(stack);
 }
 
 int main(int argc, char* argv[]) {
   int pass = table_driven();
-  printf("Pass: %d", pass);
+  printf("Pass: %d\n", pass);
 
 }
