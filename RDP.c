@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "RDP.h"
+#include "string.h"
 
 typedef struct NODE *RDP;
 struct NODE {
@@ -150,7 +151,14 @@ RDP H(){
 
 RDP F(){
   RDP n, e;
-  if(*nextTerminal == '('){
+  if(*nextTerminal != '('){
+      n = N();
+      if(n == FAILED){
+        return FAILED;
+      } else{
+          return makeNode1('F', n);
+        }
+  } else{
     nextTerminal++;
     e = E();
     if(e == FAILED || *nextTerminal != ')'){
@@ -158,14 +166,7 @@ RDP F(){
     } else{
       return makeNode3('F', makeNode0('('), e, makeNode0(')'));
     }
-  } else{
-      n = N();
-      if(n == FAILED){
-        return FAILED;
-      } else{
-          return makeNode1('F', n);
-        }
-    }
+  }
 }
 
 RDP N(){
@@ -232,12 +233,31 @@ void pre_order(RDP t) {
   }
 }
 
-int main(int argc, char* argv[]){
-    nextTerminal = "(10+3)";
-    printf("\n");
-    parseTree = E();
-    pre_order(parseTree);
-    printf("\n");
-    printf("\n");
-    return 0;
+void runRDP(){
+  printf("\n");
+  printf("Welcome to the recursive descent parser. \n");
+  printf("When entering expressions, please do not include spaces. \n");
+  printf("Valid characters include: (, ), *, /, +, -, and all numbers. \n");
+  printf("Warning, cannot include a digit followed by an parenthesis. \n");
+  printf("Ex: cannot do 2(3+1), instead do 2*(3+1). \n");
+  char *quitProg = malloc(64*sizeof(char));
+  char *expression = malloc(64*sizeof(char));
+
+  while(strncmp(quitProg, "no", 3) != 0){
+    if(strncmp(quitProg, "no", 3) != 0){
+      printf("Enter an expression: ");
+      scanf("%s", expression);
+      printf("\n");
+      nextTerminal = expression;
+      parseTree = E();
+      pre_order(parseTree);
+      printf("\n");
+      printf("\n");
+      printf("Would you like to try another expression using RDP parsing [yes, no]? ");
+      scanf("%s", quitProg);
+    }
+    else{
+      break;
+    }
+  }
 }
