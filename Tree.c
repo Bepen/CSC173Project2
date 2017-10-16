@@ -49,37 +49,17 @@ TREE makeNode4(char x, TREE t1, TREE t2, TREE t3, TREE t4){
     return root;
 }
 
-TREE B(){
-    TREE firstB, secondB;
-    if(*nextTerminal == '('){
-        nextTerminal++;
-        firstB = B();
-        if(firstB != FAILED && *nextTerminal == ')'){
-            nextTerminal++;
-            secondB = B();
-            if(secondB == FAILED){
-                return FAILED;
-            } else{
-            return makeNode4('B', makeNode0('('), firstB, makeNode0(')'), secondB);
-            }
-        } else{
-            return FAILED;
-        }
-    }else{
-        return makeNode1('B', makeNode0('e'));
-    }
-
-}
-
 
 TREE E(){
   TREE t, g;
   t = T();
   if(t == FAILED){
+    printf("Incorrect format, parse has failed.");
     return FAILED;
   } else{
     g = G();
     if(g == FAILED){
+      printf("Incorrect format. Parse has failed.");
       return FAILED;
     } else{
       return makeNode2('E', t, g);
@@ -181,7 +161,6 @@ TREE F(){
   } else{
       n = N();
       if(n == FAILED){
-        printf("failure");
         return FAILED;
       } else{
           return makeNode1('F', n);
@@ -254,12 +233,8 @@ void pre_order(TREE t) {
 }
 
 int main(int argc, char* argv[]){
-    /*
-    nextTerminal = "()()";
-    parseTree = B();
-    pre_order(parseTree);
-    */
     nextTerminal = "(10+3)";
+    printf("\n");
     parseTree = E();
     pre_order(parseTree);
     printf("\n");
