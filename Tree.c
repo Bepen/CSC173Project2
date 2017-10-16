@@ -78,29 +78,45 @@ TREE T(){
 }
 TREE G(){
 }
-TREE F(){
-}
 TREE H(){
+}*/
+TREE F(){
+  TREE n, e;
+  if(*nextTerminal == '('){
+
+  } else{
+      n = N();
+      if(n == FAILED){
+        printf("failure");
+        return FAILED;
+      } else{
+          return makeNode1('F', n);
+        }
+    }
 }
-*/
+
 TREE N(){
   TREE d, i;
   d = D();
-  if(d == FAILED){
+  i = I();
+  if(d == FAILED || i == FAILED){
     return FAILED;
   } else{
-    return makeNode1('N', d);
+    return makeNode2('N', d, i);
   }
 }
 
 TREE I(){
   TREE n;
-  n = N();
-  if(n == FAILED){
-    return FAILED;
-  } else if(nextTerminal == NULL){
+  if(!((*nextTerminal == '0') || (*nextTerminal == '1')
+  || (*nextTerminal == '2') || (*nextTerminal == '3')
+  || (*nextTerminal == '4') || (*nextTerminal == '5')
+  || (*nextTerminal == '6') || (*nextTerminal == '7')
+  || (*nextTerminal == '8') || (*nextTerminal == '9'))){
+    printf("nextTerminal is: %c", *nextTerminal);
     return makeNode1('I', makeNode0('e'));
-  } else {
+  } else{
+    n = N();
     return makeNode1('I', n);
   }
 }
@@ -111,7 +127,9 @@ TREE D(){
   || (*nextTerminal == '4') || (*nextTerminal == '5')
   || (*nextTerminal == '6') || (*nextTerminal == '7')
   || (*nextTerminal == '8') || (*nextTerminal == '9')){
-    return makeNode1('D', makeNode0(*nextTerminal));
+    char temp = *nextTerminal;
+    nextTerminal++;
+    return makeNode1('D', makeNode0(temp));
   }
   else{
     return FAILED;
@@ -128,7 +146,7 @@ void pre_order(TREE t) {
       printf("  ");
     }
     if(t->label == 'B' || t->label == 'D' || t->label == 'N' ||
-       t->label == 'I'){
+       t->label == 'I' || t->label == 'F'){
       printf("<");
       printf("%c", t->label);
       printf(">");
@@ -141,15 +159,16 @@ void pre_order(TREE t) {
   }
 }
 
-int main(){
+int main(int argc, char* argv[]){
     /*
     nextTerminal = "()()";
     parseTree = B();
     pre_order(parseTree);
     */
-    nextTerminal = "12";
-    parseTree = I();
+    nextTerminal = "31";
+    parseTree = F();
     pre_order(parseTree);
+    printf("\n");
     printf("\n");
     return 0;
 }
