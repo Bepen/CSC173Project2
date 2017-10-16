@@ -71,15 +71,19 @@ TREE B(){
 
 }
 
-/*
+
 TREE E(){
+  TREE t, g;
 }
 TREE T(){
+  TREE f, h;
 }
 TREE G(){
+  TREE t, g;
 }
 TREE H(){
-}*/
+  TREE f, h;
+}
 TREE F(){
   TREE n, e;
   if(*nextTerminal == '('){
