@@ -74,20 +74,110 @@ TREE B(){
 
 TREE E(){
   TREE t, g;
+  t = T();
+  if(t == FAILED){
+    return FAILED;
+  } else{
+    g = G();
+    if(g == FAILED){
+      return FAILED;
+    } else{
+      return makeNode2('E', t, g);
+    }
+  }
 }
+
 TREE T(){
   TREE f, h;
+  f = F();
+  if(f == FAILED){
+    return FAILED;
+  } else{
+    h = H();
+    if(h == FAILED){
+      return FAILED;
+    } else{
+      return makeNode2('T', f, h);
+    }
+  }
 }
+
 TREE G(){
   TREE t, g;
+  if(*nextTerminal == '+'){
+    nextTerminal++;
+    t = T();
+    if (t == FAILED){
+      return FAILED;
+    } else {
+      g = G();
+      if(g == FAILED){
+        return FAILED;
+      } else{
+        return makeNode3('G', makeNode0('+'), t, g);
+      }
+    }
+  } else if(*nextTerminal == '-'){
+    nextTerminal++;
+    t = T();
+    if (t == FAILED){
+      return FAILED;
+    } else {
+      g = G();
+      if(g == FAILED){
+        return FAILED;
+      } else{
+        return makeNode3('G', makeNode0('-'), t, g);
+      }
+    }
+  } else{
+    return makeNode1('G', makeNode0('e'));
+  }
 }
+
 TREE H(){
   TREE f, h;
+  if(*nextTerminal == '*'){
+    nextTerminal++;
+    f = F();
+    if (f == FAILED){
+      return FAILED;
+    } else {
+      h = H();
+      if(h == FAILED){
+        return FAILED;
+      } else{
+        return makeNode3('H', makeNode0('*'), f, h);
+      }
+    }
+  } else if(*nextTerminal == '/'){
+    nextTerminal++;
+    f = F();
+    if (f == FAILED){
+      return FAILED;
+    } else {
+      h = H();
+      if(h == FAILED){
+        return FAILED;
+      } else{
+        return makeNode3('H', makeNode0('/'), f, h);
+      }
+    }
+  } else{
+    return makeNode1('H', makeNode0('e'));
+  }
 }
+
 TREE F(){
   TREE n, e;
   if(*nextTerminal == '('){
-
+    nextTerminal++;
+    e = E();
+    if(e == FAILED || *nextTerminal != ')'){
+      return FAILED;
+    } else{
+      return makeNode3('F', makeNode0('('), e, makeNode0(')'));
+    }
   } else{
       n = N();
       if(n == FAILED){
@@ -117,7 +207,6 @@ TREE I(){
   || (*nextTerminal == '4') || (*nextTerminal == '5')
   || (*nextTerminal == '6') || (*nextTerminal == '7')
   || (*nextTerminal == '8') || (*nextTerminal == '9'))){
-    printf("nextTerminal is: %c", *nextTerminal);
     return makeNode1('I', makeNode0('e'));
   } else{
     n = N();
@@ -150,7 +239,8 @@ void pre_order(TREE t) {
       printf("  ");
     }
     if(t->label == 'B' || t->label == 'D' || t->label == 'N' ||
-       t->label == 'I' || t->label == 'F'){
+       t->label == 'I' || t->label == 'F' || t->label == 'E' ||
+       t->label == 'T' || t->label == 'G' || t->label == 'H'){
       printf("<");
       printf("%c", t->label);
       printf(">");
@@ -169,8 +259,8 @@ int main(int argc, char* argv[]){
     parseTree = B();
     pre_order(parseTree);
     */
-    nextTerminal = "31";
-    parseTree = F();
+    nextTerminal = "(10+3)";
+    parseTree = E();
     pre_order(parseTree);
     printf("\n");
     printf("\n");
