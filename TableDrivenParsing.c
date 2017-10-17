@@ -79,11 +79,14 @@ void pre_order(TREE t) {
   }
 }
 */
+
+//Parser for a table driven implementation of an input
 bool table_driven(char* input) {
   printf("Input: %s\n", input);
   Stack *stack = Stack_new();
   Stack_add_at_front(stack, "S");
   parseTree = makeNode0('S');
+
   for (int i = 0; input[i] != '\0'; i++) {
       if (input[i] == '0' || input[i] == '1' || input[i] == '2' ||
         input[i] == '3'|| input[i] == '4'|| input[i] == '5'||
@@ -143,6 +146,7 @@ bool table_driven(char* input) {
           char* p = Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
+      //Input for left parenthesis
       if (input[i] == '(') {
         //printf("Looking at: %c with open parentheses\n", input[i]);
         tested = 0;
@@ -180,6 +184,7 @@ bool table_driven(char* input) {
           char* p = Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
+      //Parse row for left parenthesis
       if (input[i] == ')') {
         tested = 0;
         //printf("Looking at: %c with closed parentheses\n", input[i]);
@@ -200,6 +205,7 @@ bool table_driven(char* input) {
           char* p = Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
+      //Parse row for addition
       if (input[i] == '+') {
         tested = 0;
         //printf("Looking at: %c with the plus symbol\n", input[i]);
@@ -223,6 +229,8 @@ bool table_driven(char* input) {
           char* p = Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
+
+      //Parse row for subtraction
       if (input[i] == '-') {
         tested = 0;
         //printf("Looking at: %c with the subtraction symbol\n", input[i]);
@@ -246,6 +254,7 @@ bool table_driven(char* input) {
           char* p = Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
+      //This is the parse tow for the multipliction
       if (input[i] == '*') {
         tested = 0;
         //printf("Looking at: %c with the multiplication symbol\n", input[i]);
@@ -265,6 +274,7 @@ bool table_driven(char* input) {
           char* p = Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
+      //This is the parse row for the division symbol
       if (input[i] == '/') {
         tested = 0;
         //printf("Looking at: %c with the division symbol\n", input[i]);
@@ -284,6 +294,7 @@ bool table_driven(char* input) {
           char* p = Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
+      //This is the parse row for the end token
       if (input[i] == 'Z') {
         tested = 0;
         //printf("Looking at: %c with the end symbol\n", input[i]);
@@ -308,6 +319,7 @@ bool table_driven(char* input) {
   //printf("\nStack: ");
   //Stack_print_string_stack(stack);
   //printf("Stack with epsilons\n");
+  //These are the end syntactic category as well as the empty string categories and empties them.
   while (!Stack_is_empty(stack)) {
     if (strcmp(Stack_element_at(stack, 0), "Z") == 0
     || strcmp(Stack_element_at(stack, 0), "J") == 0
@@ -322,6 +334,8 @@ bool table_driven(char* input) {
   return Stack_is_empty(stack);
 }
 
+//Loops until the user says to stop.
+//Evaluates the table driven parser
 void runTDP(){
   printf("\n");
   printf("Welcome to the table driven parser. \n");
