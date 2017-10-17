@@ -338,7 +338,8 @@ bool table_driven(char* input) {
 //Evaluates the table driven parser
 void runTDP(){
   printf("\n");
-  printf("Welcome to the table driven parser. \n");
+  printf("Welcome to the Table Driven Parser. \n");
+  printf("\n");
   printf("When entering expressions, please do not include spaces. \n");
   printf("Valid characters include: (, ), *, /, +, -, and all numbers. \n");
   printf("Warning, cannot include a digit followed by an parenthesis. \n");

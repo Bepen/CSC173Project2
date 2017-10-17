@@ -235,7 +235,8 @@ void pre_order(RDP t) { //preorder traversal of the tree
 
 void runRDP(){ //runs the recursive descent parser
   printf("\n");
-  printf("Welcome to the recursive descent parser. \n");
+  printf("Welcome to the Recursive Descent Parser. \n");
+  printf("\n");
   printf("When entering expressions, please do not include spaces. \n");
   printf("Valid characters include: (, ), *, /, +, -, and all numbers. \n");
   printf("Warning, cannot include a digit followed by an parenthesis. \n");
