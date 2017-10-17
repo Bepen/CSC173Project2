@@ -233,10 +233,25 @@ void pre_order(RDP t) { //preorder traversal of the tree
   }
 }
 
-void runRDP(){ //runs the recursive descent parser
+void giveValue(RDP t) {
+  if (t == NULL) {
+    return;
+  } else {
+    if(t->label == 'B' || t->label == 'D' || t->label == 'N' ||
+         t->label == 'I' || t->label == 'F' || t->label == 'E' ||
+         t->label == 'T' || t->label == 'G' || t->label == 'H'){
+    } else if (t->label == 'e') {
+    } else {
+      printf("%c", t->label);
+    }
+    giveValue(t->leftmostChild);
+    giveValue(t->rightSibling);
+  }
+}
+
+void runRDP(){
   printf("\n");
-  printf("Welcome to the Recursive Descent Parser. \n");
-  printf("\n");
+  printf("Welcome to the recursive descent parser. \n");
   printf("When entering expressions, please do not include spaces. \n");
   printf("Valid characters include: (, ), *, /, +, -, and all numbers. \n");
   printf("Warning, cannot include a digit followed by an parenthesis. \n");
@@ -252,6 +267,8 @@ void runRDP(){ //runs the recursive descent parser
       nextTerminal = expression;
       parseTree = E();
       pre_order(parseTree);
+      printf("\nValue of expression: ");
+      giveValue(parseTree);
       printf("\n");
       printf("\n");
       printf("Would you like to try another expression using RDP parsing [yes, no]? ");
