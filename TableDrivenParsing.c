@@ -86,6 +86,8 @@ bool table_driven(char* input) {
   Stack *stack = Stack_new();
   Stack_add_at_front(stack, "S");
 
+
+
   for (int i = 0; input[i] != '\0'; i++) {
       if (input[i] == '0' || input[i] == '1' || input[i] == '2' ||
         input[i] == '3'|| input[i] == '4'|| input[i] == '5'||
@@ -96,18 +98,22 @@ bool table_driven(char* input) {
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "S") == 0) {
               tested = 1;
+              printf("Stack element looked at: S  Input Looked At: %c   Production Used: 1\n", input[i]);
               Stack_pop(stack);
               Stack_add_at_front(stack, "Z");
               Stack_add_at_front(stack, "E");
+
             }
             if (strcmp(Stack_element_at(stack, 0), "E") == 0) {
               tested = 1;
+              printf("Stack element looked at: E  Input Looked At: %c   Production Used: 2\n", input[i]);
               Stack_pop(stack);
               Stack_add_at_front(stack, "J");
               Stack_add_at_front(stack, "T");
             }
             if (strcmp(Stack_element_at(stack, 0), "T") == 0) {
               tested = 1;
+              printf("Stack element looked at: T  Input Looked At: %c   Production Used: 6\n", input[i]);
               Stack_pop(stack);
               Stack_add_at_front(stack, "K");
               Stack_add_at_front(stack, "F");
@@ -115,6 +121,7 @@ bool table_driven(char* input) {
             if (strcmp(Stack_element_at(stack, 0), "F") == 0) {
               tested = 1;
               Stack_pop(stack);
+              printf("Stack element looked at: F  Input Looked At: %c   Production Used: 11\n", input[i]);
               if (input[i] == '0') {
                 Stack_add_at_front(stack, "0");
               } else if (input[i] == '1') {
@@ -151,24 +158,28 @@ bool table_driven(char* input) {
         tested = 0;
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "S") == 0) {
+              printf("Stack element looked at: S  Input Looked At: %c   Production Used: 1\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, "Z");
               Stack_add_at_front(stack, "E");
             }
             if (strcmp(Stack_element_at(stack, 0), "E") == 0) {
+              printf("Stack element looked at: E  Input Looked At: %c   Production Used: 2\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, "J");
               Stack_add_at_front(stack, "T");
             }
             if (strcmp(Stack_element_at(stack, 0), "T") == 0) {
+              printf("Stack element looked at: T  Input Looked At: %c   Production Used: 6\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, "K");
               Stack_add_at_front(stack, "F");
             }
             if (strcmp(Stack_element_at(stack, 0), "F") == 0) {
+              printf("Stack element looked at: F  Input Looked At: %c   Production Used: 10\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, ")");
@@ -189,10 +200,12 @@ bool table_driven(char* input) {
         //printf("Looking at: %c with closed parentheses\n", input[i]);
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
+              printf("Stack element looked at: J  Input Looked At: %c   Production Used: 5\n", input[i]);
               tested = 1;
               Stack_pop(stack);
             }
             if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
+              printf("Stack element looked at: K  Input Looked At: %c   Production Used: 9\n", input[i]);
               tested = 1;
               Stack_pop(stack);
             }
@@ -210,6 +223,7 @@ bool table_driven(char* input) {
         //printf("Looking at: %c with the plus symbol\n", input[i]);
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
+              printf("Stack element looked at: J  Input Looked At: %c   Production Used: 3\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, "J");
@@ -217,6 +231,7 @@ bool table_driven(char* input) {
               Stack_add_at_front(stack, "+");
             }
             if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
+              printf("Stack element looked at: K  Input Looked At: %c   Production Used: 9\n", input[i]);
               tested = 1;
               Stack_pop(stack);
             }
@@ -235,6 +250,7 @@ bool table_driven(char* input) {
         //printf("Looking at: %c with the subtraction symbol\n", input[i]);
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
+              printf("Stack element looked at: J  Input Looked At: %c   Production Used: 4\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, "J");
@@ -242,6 +258,7 @@ bool table_driven(char* input) {
               Stack_add_at_front(stack, "-");
             }
             if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
+              printf("Stack element looked at: K  Input Looked At: %c   Production Used: 9\n", input[i]);
               tested = 1;
               Stack_pop(stack);
             }
@@ -259,6 +276,7 @@ bool table_driven(char* input) {
         //printf("Looking at: %c with the multiplication symbol\n", input[i]);
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
+              printf("Stack element looked at: K  Input Looked At: %c   Production Used: 7\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, "K");
@@ -279,6 +297,7 @@ bool table_driven(char* input) {
         //printf("Looking at: %c with the division symbol\n", input[i]);
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
+              printf("Stack element looked at: K  Input Looked At: %c   Production Used: 8\n", input[i]);
               tested = 1;
               Stack_pop(stack);
               Stack_add_at_front(stack, "K");
@@ -299,10 +318,12 @@ bool table_driven(char* input) {
         //printf("Looking at: %c with the end symbol\n", input[i]);
           while(Stack_element_at(stack, 0)[0] != input[i]) {
             if (strcmp(Stack_element_at(stack, 0), "J") == 0) {
+              printf("Stack element looked at: J  Input Looked At: %c   Production Used: 5\n", input[i]);
               tested = 1;
               Stack_pop(stack);
             }
             if (strcmp(Stack_element_at(stack, 0), "K") == 0) {
+              printf("Stack element looked at: K  Input Looked At: %c   Production Used: 9\n", input[i]);
               tested = 1;
               Stack_pop(stack);
             }
@@ -353,7 +374,6 @@ void runTDP(){
       int pass = table_driven(expression);
       if (pass == 1) {
         printf("Passed.\n");
-        pre_order(parseTree);
       } else {
         printf("Failed.\n");
       }
