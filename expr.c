@@ -6,6 +6,6 @@
 #include "TableDrivenParsing.c"
 
 int main(int argc, char* argv[]){
-  runRDP();
-  runTDP();
+  runRDP(); //runs the recursive descent parser
+  runTDP(); //runs the table driven parser
 }

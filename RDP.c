@@ -5,7 +5,7 @@
 #include "string.h"
 
 typedef struct NODE *RDP;
-struct NODE {
+struct NODE { //trees have a leftmost child and a right sibling
     char label;
     RDP leftmostChild, rightSibling;
 };
@@ -14,7 +14,7 @@ RDP parseTree;
 char *nextTerminal;
 int indentCounter = 0;
 
-RDP makeNode0(char x){
+RDP makeNode0(char x){ //creates a leaf
     RDP root;
     root = (RDP)malloc(sizeof(struct NODE));
     root->label = x;
@@ -22,26 +22,26 @@ RDP makeNode0(char x){
     root->rightSibling = NULL;
     return root;
 }
-RDP makeNode1(char x, RDP t){
+RDP makeNode1(char x, RDP t){ //creates a tree with one child
     RDP root;
     root = makeNode0(x);
     root->leftmostChild = t;
     return root;
 }
-RDP makeNode2(char x, RDP t1, RDP t2){
+RDP makeNode2(char x, RDP t1, RDP t2){ //creates a tree with two children
     RDP root;
     root = makeNode1(x, t1);
     t1->rightSibling = t2;
     return root;
 }
-RDP makeNode3(char x, RDP t1, RDP t2, RDP t3){
+RDP makeNode3(char x, RDP t1, RDP t2, RDP t3){ //creates a tree with three children
     RDP root;
     root = makeNode1(x, t1);
     t1->rightSibling = t2;
     t2->rightSibling = t3;
     return root;
 }
-RDP makeNode4(char x, RDP t1, RDP t2, RDP t3, RDP t4){
+RDP makeNode4(char x, RDP t1, RDP t2, RDP t3, RDP t4){ //creates a tree with four children
     RDP root;
     root = makeNode1(x, t1);
     t1->rightSibling = t2;
@@ -51,7 +51,7 @@ RDP makeNode4(char x, RDP t1, RDP t2, RDP t3, RDP t4){
 }
 
 
-RDP E(){
+RDP E(){ //creates a tree for E
   RDP t, g;
   t = T();
   if(t == FAILED){
@@ -68,7 +68,7 @@ RDP E(){
   }
 }
 
-RDP T(){
+RDP T(){ //creates a tree for T
   RDP f, h;
   f = F();
   if(f == FAILED){
@@ -83,7 +83,7 @@ RDP T(){
   }
 }
 
-RDP G(){
+RDP G(){ //creates a tree for G
   RDP t, g;
   if(*nextTerminal == '+'){
     nextTerminal++;
@@ -116,7 +116,7 @@ RDP G(){
   }
 }
 
-RDP H(){
+RDP H(){ //creates a tree for H
   RDP f, h;
   if(*nextTerminal == '*'){
     nextTerminal++;
@@ -149,7 +149,7 @@ RDP H(){
   }
 }
 
-RDP F(){
+RDP F(){ //creates a tree for F
   RDP n, e;
   if(*nextTerminal != '('){
       n = N();
@@ -169,7 +169,7 @@ RDP F(){
   }
 }
 
-RDP N(){
+RDP N(){ //creates a tree for N
   RDP d, i;
   d = D();
   i = I();
@@ -180,7 +180,7 @@ RDP N(){
   }
 }
 
-RDP I(){
+RDP I(){ //creates a tree for I
   RDP n;
   if(!((*nextTerminal == '0') || (*nextTerminal == '1')
   || (*nextTerminal == '2') || (*nextTerminal == '3')
@@ -194,7 +194,7 @@ RDP I(){
   }
 }
 
-RDP D(){
+RDP D(){ //creates a tree for D
   if((*nextTerminal == '0') || (*nextTerminal == '1')
   || (*nextTerminal == '2') || (*nextTerminal == '3')
   || (*nextTerminal == '4') || (*nextTerminal == '5')
@@ -209,7 +209,7 @@ RDP D(){
   }
 }
 
-void pre_order(RDP t) {
+void pre_order(RDP t) { //preorder traversal of the tree
   if (t == NULL) {
     indentCounter--;
     return;
@@ -233,7 +233,7 @@ void pre_order(RDP t) {
   }
 }
 
-void runRDP(){
+void runRDP(){ //runs the recursive descent parser
   printf("\n");
   printf("Welcome to the recursive descent parser. \n");
   printf("When entering expressions, please do not include spaces. \n");
