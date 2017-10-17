@@ -7,6 +7,7 @@
 #include "Stack.c"
 #include "Stack.h"
 
+/*
 typedef struct NODE *TREE;
 struct NODE {
     char label;
@@ -14,8 +15,10 @@ struct NODE {
 };
 TREE parseTree;
 int indentCounter = 0;
+*/
 int tested = 0;
 
+/*
 TREE makeNode0(char x){
     TREE root;
     root = (TREE)malloc(sizeof(struct NODE));
@@ -51,6 +54,8 @@ TREE makeNode4(char x, TREE t1, TREE t2, TREE t3, TREE t4){
     t3->rightSibling = t4;
     return root;
 }
+*/
+/*
 void pre_order(TREE t) {
   if (t == NULL) {
     indentCounter--;
@@ -73,7 +78,7 @@ void pre_order(TREE t) {
     pre_order(t->rightSibling);
   }
 }
-
+*/
 bool table_driven(char* input) {
   printf("Input: %s\n", input);
   Stack *stack = Stack_new();
@@ -317,13 +322,40 @@ bool table_driven(char* input) {
   return Stack_is_empty(stack);
 }
 
-int main(int argc, char* argv[]) {
-  int pass = table_driven();
-  if (pass == 1) {
-    printf("Passed.\n");
-    //pre_order(parseTree);
-  } else {
-    printf("Failed.\n");
-  }
+void runTDP(){
+  printf("\n");
+  printf("Welcome to the table driven parser. \n");
+  printf("When entering expressions, please do not include spaces. \n");
+  printf("Valid characters include: (, ), *, /, +, -, and all numbers. \n");
+  printf("Warning, cannot include a digit followed by an parenthesis. \n");
+  printf("Ex: cannot do 2(3+1), instead do 2*(3+1). \n");
+  char *quitProg = malloc(64*sizeof(char));
+  char *expression = malloc(64*sizeof(char));
 
+  while(strncmp(quitProg, "no", 3) != 0){
+    if(strncmp(quitProg, "no", 3) != 0){
+      printf("Enter an expression: ");
+      scanf("%s", expression);
+      printf("\n");
+      int pass = table_driven(expression);
+      if (pass == 1) {
+        printf("Passed.\n");
+        //pre_order(parseTree);
+      } else {
+        printf("Failed.\n");
+      }
+      printf("\n");
+      printf("\n");
+      printf("Would you like to try another expression using TDP parsing [yes, no]? ");
+      scanf("%s", quitProg);
+    }
+    else{
+      break;
+    }
+  }
 }
+/*
+int main(int argc, char* argv[]) {
+  runTDP();
+}
+*/
