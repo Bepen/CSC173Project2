@@ -143,7 +143,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
       //Input for left parenthesis
@@ -181,7 +181,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
       //Parse row for left parenthesis
@@ -202,7 +202,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
       //Parse row for addition
@@ -226,7 +226,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
 
@@ -251,7 +251,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
       //This is the parse tow for the multipliction
@@ -271,7 +271,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
       //This is the parse row for the division symbol
@@ -291,7 +291,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
       //This is the parse row for the end token
@@ -312,7 +312,7 @@ bool table_driven(char* input) {
             }
           }
           //Stack_print_string_stack(stack);
-          char* p = Stack_pop(stack);
+          Stack_pop(stack);
           //printf("Popped Element: %s", p);
       }
   }
@@ -338,8 +338,7 @@ bool table_driven(char* input) {
 //Evaluates the table driven parser
 void runTDP(){
   printf("\n");
-  printf("Welcome to the Table Driven Parser. \n");
-  printf("\n");
+  printf("Welcome to the table driven parser. \n");
   printf("When entering expressions, please do not include spaces. \n");
   printf("Valid characters include: (, ), *, /, +, -, and all numbers. \n");
   printf("Warning, cannot include a digit followed by an parenthesis. \n");
