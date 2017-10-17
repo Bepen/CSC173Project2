@@ -12,7 +12,6 @@ struct NODE {
     char label;
     TREE leftmostChild, rightSibling;
 };
-
 TREE parseTree;
 int indentCounter = 0;
 int tested = 0;
@@ -75,12 +74,11 @@ void pre_order(TREE t) {
   }
 }
 
-bool table_driven() {
-  char* input = "1+7*3/(3+5)";
+bool table_driven(char* input) {
   printf("Input: %s\n", input);
   Stack *stack = Stack_new();
   Stack_add_at_front(stack, "S");
-
+  parseTree = makeNode0('S');
   for (int i = 0; input[i] != '\0'; i++) {
       if (input[i] == '0' || input[i] == '1' || input[i] == '2' ||
         input[i] == '3'|| input[i] == '4'|| input[i] == '5'||
@@ -311,7 +309,6 @@ bool table_driven() {
     || strcmp(Stack_element_at(stack, 0), "K") == 0) {
       Stack_pop(stack);
     } else {
-      //printf("Failure\n");
       return false;
     }
   }
@@ -322,6 +319,11 @@ bool table_driven() {
 
 int main(int argc, char* argv[]) {
   int pass = table_driven();
-  printf("Pass: %d\n", pass);
+  if (pass == 1) {
+    printf("Passed.\n");
+    //pre_order(parseTree);
+  } else {
+    printf("Failed.\n");
+  }
 
 }
