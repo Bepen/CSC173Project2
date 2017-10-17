@@ -85,7 +85,6 @@ bool table_driven(char* input) {
   printf("Input: %s\n", input);
   Stack *stack = Stack_new();
   Stack_add_at_front(stack, "S");
-  parseTree = makeNode0('S');
 
   for (int i = 0; input[i] != '\0'; i++) {
       if (input[i] == '0' || input[i] == '1' || input[i] == '2' ||
@@ -354,7 +353,7 @@ void runTDP(){
       int pass = table_driven(expression);
       if (pass == 1) {
         printf("Passed.\n");
-        //pre_order(parseTree);
+        pre_order(parseTree);
       } else {
         printf("Failed.\n");
       }
