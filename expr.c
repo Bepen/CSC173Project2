@@ -1,3 +1,9 @@
+/*
+CSC 173 Project 2
+Created By Bepen Neupane and Sailesh Kaveti
+NetID: bneupane skaveti
+*/
+
 #define FAILED NULL
 #include "stdio.h"
 #include "stdlib.h"

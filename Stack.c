@@ -1,4 +1,12 @@
 /*
+CSC 173 Project 2
+Created By Bepen Neupane and Sailesh Kaveti
+NetID: bneupane skaveti
+*/
+
+
+//we modified the linked list from project 1
+/*
  * File: Stack.c
  * Creator: George Ferguson
  * Created: Thu Jun 30 14:47:12 2016

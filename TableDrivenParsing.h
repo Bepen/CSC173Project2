@@ -1,3 +1,9 @@
+/*
+CSC 173 Project 2
+Created By Bepen Neupane and Sailesh Kaveti
+NetID: bneupane skaveti
+*/
+
 typedef struct NODE *TREE; struct NODE;
 
 TREE makeNode0(char x);
